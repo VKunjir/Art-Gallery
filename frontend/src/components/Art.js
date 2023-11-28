@@ -13,11 +13,11 @@ const Art = ({ details }) => {
 
         <div className='bg-white mb-3 rounded-[10px] p-3 flex flex-col'>
           <div className='font-bold'>{details.title}</div>
-          <div className='text-[12px]'>by {details.artist}</div>
+          {/* <div className='text-[12px]'>by {details.artist}</div> */}
 
           <div className='flex flex-row space-x-5'>
             <div className=''>₹{details.price}</div>
-            <div className=''>{details.rating}⭐</div>
+            {/* <div className=''>{details.rating}⭐</div> */}
           </div>
         </div>
       </div>

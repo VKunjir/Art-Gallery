@@ -323,155 +323,122 @@ app.get('/artDet/:id', async (req, res) => {
 });
 
 
+//update user data
+app.put('/updateAccount/:userID', async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const updatedDetails = req.body; // The updated user details sent from the frontend
 
+    console.log("Updating");
+    // Update the user details in the database based on the provided userID
+    console.log(req.body);
+    const updatedUser = await User.findOneAndUpdate(
+      { userID: userID },
+      { $set: updatedDetails },
+      { new: true } // To return the updated user data
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log(updatedUser);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.error('Error updating user details:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+//Deleting particular order
+app.delete('/deleteOrder/:orderID', async (req, res) => {
+  try {
+    const orderID = req.params.orderID;
+
+    const deletedOrder = await Order.findOneAndDelete({ orderID: orderID });
+
+    if (!deletedOrder) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    res.status(200).json({ message: 'Order deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// delete user
+app.delete('/deleteUser/:userID', async (req, res) => {
+  try {
+    const userID = req.params.userID;
+
+    const deletedUser = await User.findOneAndDelete({ userID: userID });
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Deleting particular art
+app.delete('/deleteArt/:artID', async (req, res) => {
+  try {
+    const artID = req.params.artID;
+
+    const deletedArt = await arts.findOneAndDelete({ artsID: artID });
+
+    if (!deletedArt) {
+      return res.status(404).json({ message: 'Art not found' });
+    }
+
+    res.status(200).json({ message: 'Art deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting art:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Updating particular art
+app.put('/updateArt/:artID', upload.single('image'), async (req, res) => {
+  try {
+    const artID = req.params.artID;
+    const updatedDetails = req.body; // The updated art details sent from the frontend
+
+    const updatedArt = await arts.findOneAndUpdate(
+      { artsID: artID },
+      { $set: updatedDetails },
+      { new: true } // To return the updated art data
+    );
+
+    if (!updatedArt) {
+      return res.status(404).json({ message: 'Art not found' });
+    }
+
+    res.status(200).json(updatedArt);
+  } catch (error) {
+    console.error('Error updating art details:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+//Fetching all user data
+app.get('/users', async (req, res) => {
+  try {
+    const allUsers = await User.find();
+    res.status(200).json(allUsers);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 app.listen(3001, () => {
   console.log("Server is running on: 3001");
 });
 
-
-
-// app.get('/art', async (req, res) => {
-//   try {
-//     const allarts = await artss.find();
-//     console.log(allarts);
-//     // res.json("message","successful",allarts);
-//     res.json({ message: "successful", artsData: allarts });
-//   } catch (err) {
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// });
-
-// app.get('/artsDet/:id', async (req, res) => {
-//     try {
-//         let aid = req.params.id;
-//         const arts = await artss.findOne({ artsID: aid});
-//         console.log(arts);
-//         if (!arts) {
-//             return res.status(404).json({ message: 'arts not found' });
-//         }
-//         res.json({ message: 'Successful', artsData: arts });
-//     } catch (err) {
-//         res.status(500).json({ error: 'Server error' });
-//     }
-// });
-
-// app.put('/update-arts', async (req, res) => {
-//   const { artsID, title, description, price, style, dateCreated, image } = req.body;
-
-//   if (!artsID) {
-//     return res.status(400).json({ error: 'arts ID is missing' });
-//   }
-
-//   try {
-//     const updatedarts = await arts.findByIdAndUpdate(
-//       artsID,
-//       { title, description, price, style, dateCreated, image },
-//       { new: true }
-//     );
-
-//     if (!updatedarts) {
-//       return res.status(404).json({ error: 'arts not found' });
-//     }
-
-//     res.json(updatedarts);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Error updating arts data' });
-//   }
-// });
-
-// app.post('/register', async (req, res) => {
-//   try {
-//     const counter = await Counter.findOneAndUpdate(
-//       { _id: 'UserId' },
-//       { $inc: { sequence_value: 1 } },
-//       { new: true, upsert: true }
-//     );
-
-//     const newUser = new Users({
-//       UserID: counter.sequence_value,
-//       name: req.body.Username,
-//       email: req.body.email,
-//       password: req.body.password,
-//       city: req.body.city,
-//       state: req.body.state,
-//       streetName: req.body.streetName,
-//       pincode: req.body.pincode,
-//     });
-
-//     const createdUser = await newUser.save();
-//     res.json(createdUser);
-//   } catch (err) {
-//     res.status(500).json({ error: 'Error creating User' });
-//   }
-// });
-
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//       cb(null, 'uploads'); // Set your desired upload destination
-//   },
-//   filename: function (req, file, cb) {
-//       cb(null, file.originalname); // Use original file name or customize as needed
-//   }
-// });
-
-// const upload = multer({ storage: storage });
-
-// app.post('/addarts', upload.single('image'), async (req, res) => {
-//   try {
-//     const counter = await Counter.findOneAndUpdate(
-//       { _id: 'artsId' },
-//       { $inc: { sequence_value: 1 } },
-//       { new: true, upsert: true }
-//     );
-
-//     const newarts = new arts({
-//       artsID: counter.sequence_value,
-//       UserID: req.body.UserID,
-//       title: req.body.title,
-//       description: req.body.description,
-//       price: req.body.price,
-//       style: req.body.style,
-//       dateCreated: req.body.dateCreated,
-//       image: req.file.filename, // Use req.file.filename to get the uploaded image filename
-//     });
-
-//     const createdarts = await newarts.save();
-//     res.json(createdarts);
-//   } catch (err) {
-//     res.status(500).json({ error: 'Error creating arts' });
-//   }
-// }); 
-
-  // Get User by UserID
-// app.get('/Users/:UserID', async (req, res) => {
-//   const UserID = req.params.UserID;
-
-//   try {
-//     const User = await Users.findOne({ UserID: UserID });
-//     if (User) {
-//       res.json(User);
-//     } else {
-//       res.status(404).json({ message: 'User not found' });
-//     }
-//   } catch (err) {
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// });
-
-// app.get('/arts/:artsID', async (req, res) => {
-//   const artsID = req.params.artsID;
-
-//   try {
-//     const arts = await arts.findOne({ _id: artsID });
-//     if (arts) {
-//       res.json(User);
-//     } else {
-//       res.status(404).json({ message: 'arts not found' });
-//     }
-//   } catch (err) {
-//     res.status(500).json({ error: 'Server error' });
-//   }
-// });

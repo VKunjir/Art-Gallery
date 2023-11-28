@@ -30,7 +30,7 @@ const MyOrder = () => {
 
     return (
         <div className='flex flex-col items-center'>
-      <h1 className='font-bold text-5xl'>Your Art</h1>
+      <h1 className='font-bold text-5xl'>Your order</h1>
       <div className='flex flex-row flex-wrap justify-center'>
         {artData.map((art) => (
           <MyOrderDetail

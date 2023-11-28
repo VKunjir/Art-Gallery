@@ -93,11 +93,12 @@ const Order = () => {
 
                 <div className='bg-white mb-3 rounded-[10px] p-3 flex flex-col w-96 justify-evenly'>
                 <h1 className='font-bold text-5xl'>Art Detail</h1>
-                    <div className='font-bold text-2xl'>{data.title}</div>
-                    <div className='text-1xl'>by {data.artist}</div>
-                    <div className='text-lg'>{data.rating}⭐</div>
+                    <div className='font-bold text-2xl'>Title : -{data.title}</div>
+                    {/* <div className='text-1xl'>by {data.description}</div> */}
+                    
                     <div><hr className='border-black border-[2px]'/></div>
                     <div>{data.description}</div>
+                    <div className='text-lg'>Description: - {data.description}</div>
                     <div className='text-2xl'>Total amount = ₹{data.price}</div>
                     
                     <div className="flex">

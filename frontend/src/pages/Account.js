@@ -29,7 +29,7 @@ const Account = () => {
           <div key={user.userID} className="bg-white shadow-md rounded-md p-6">
             <MyAccount
               details={{
-                id: user.artsID,
+                userID: user.userID,
                 email: user.email,
                 name: user.name,
                 streetName: user.streetName,

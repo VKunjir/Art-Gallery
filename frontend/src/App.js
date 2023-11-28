@@ -11,6 +11,7 @@ import MyOrder from "./components/MyOrder.js";
 import { ToastContainer } from 'react-toastify';
 import Cart from "./components/Cart.js";
 import MyWishList from "./components/MyWishList.js"
+import AdminPage from './pages/AdminPage.js';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/order/:userID/:artsID" element={<Order/>} />
           <Route path="/myorder/:userID" element={<MyOrder/>} />
           <Route path="/cart/:userID" element={<Cart/>} />
+          <Route path='/admin' element={<AdminPage/>} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />
