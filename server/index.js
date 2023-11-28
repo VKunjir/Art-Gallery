@@ -427,6 +427,7 @@ app.put('/updateArt/:artID', upload.single('image'), async (req, res) => {
   }
 });
 
+
 //Fetching all user data
 app.get('/users', async (req, res) => {
   try {
