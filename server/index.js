@@ -442,6 +442,6 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("Server is running on: 3001");
+app.listen(8000, () => {
+  console.log("Server is running on: 8000");
 });
