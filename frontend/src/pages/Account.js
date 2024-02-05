@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import MyAccount from '../components/MyAccount';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
+import MyAccount from "../components/MyAccount";
 
 const Account = () => {
   const { userID } = useParams();
   const [userData, setUserData] = useState([]);
-  
+
   useEffect(() => {
     // Fetch user data
     axios
-      .get(`http://localhost:3001/account/${userID}`)
+      .get(`http://localhost:8000/account/${userID}`)
       .then((response) => {
         if (Array.isArray(response.data.userData)) {
           setUserData(response.data.userData);
         }
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        console.error("Error fetching user data:", error);
       });
   }, [userID]);
 
@@ -42,7 +42,10 @@ const Account = () => {
         ))}
       </div>
       <div className="text-xl mt-4">
-        <Link to={`/home/${userID}`} className="inline-block bg-black text-white py-2 px-4 rounded-lg text-center">
+        <Link
+          to={`/home/${userID}`}
+          className="inline-block bg-black text-white py-2 px-4 rounded-lg text-center"
+        >
           Back
         </Link>
       </div>

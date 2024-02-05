@@ -10,7 +10,7 @@ const ArtDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/artDet/${id}`);
+        const response = await axios.get(`http://localhost:8000/artDet/${id}`);
         setArtData(response.data.artsData);
       } catch (error) {
         console.error("Error fetching art data:", error);
@@ -34,7 +34,7 @@ const ArtDetails = () => {
   const handelCart = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:3001/addCart/${data.userID}`,
+        `http://localhost:8000/addCart/${data.userID}`,
         {
           artsID: data.id,
           userID: data.userID,
@@ -54,7 +54,7 @@ const ArtDetails = () => {
   const handelWishlist = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:3001/addwish/${data.userID}`,
+        `http://localhost:8000/addwish/${data.userID}`,
         {
           artsID: data.id,
           userID: data.userID,
@@ -74,7 +74,7 @@ const ArtDetails = () => {
         className={`w-[500px] h-[500px] bg-black rounded-[10px] overflow-hidden`}
       >
         <img
-          src={`http://localhost:3001/uploads/${data.img}`}
+          src={`http://localhost:8000/uploads/${data.img}`}
           alt="painting"
           className="object-fill"
         />

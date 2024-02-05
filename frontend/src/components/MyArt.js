@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
-import MyArtDetail from './MyArtDetail';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
+import MyArtDetail from "./MyArtDetail";
 
 const MyArt = () => {
   const { userID } = useParams();
@@ -9,22 +9,23 @@ const MyArt = () => {
 
   useEffect(() => {
     // Fetch art data
-    axios.get(`http://localhost:3001/myart/${userID}`)
-      .then(response => {
+    axios
+      .get(`http://localhost:8000/myart/${userID}`)
+      .then((response) => {
         // Set the fetched art data to state
         setArtData(response.data.artData);
         console.log("Frontend");
         console.log(response.data.artData);
       })
-      .catch(error => {
-        console.error('Error fetching art data:', error);
+      .catch((error) => {
+        console.error("Error fetching art data:", error);
       });
   }, [userID]);
 
   return (
-    <div className='flex flex-col items-center'>
-      <h1 className='font-bold text-5xl'>Your Art</h1>
-      <div className='flex flex-row flex-wrap justify-center'>
+    <div className="flex flex-col items-center">
+      <h1 className="font-bold text-5xl">Your Art</h1>
+      <div className="flex flex-row flex-wrap justify-center">
         {artData.map((art) => (
           <MyArtDetail
             key={art.artsID}
@@ -35,15 +36,17 @@ const MyArt = () => {
               img: art.image,
               price: art.price,
               rating: art.rating,
-              style:art.style,
-              date:art.data,
-              
+              style: art.style,
+              date: art.data,
             }}
           />
         ))}
       </div>
-      <div className='text-xl bg-black text-white p-2 rounded-lg mt-4'>
-        <Link to={`/home/${userID}`} style={{ textDecoration: 'none', color: 'white' }}>
+      <div className="text-xl bg-black text-white p-2 rounded-lg mt-4">
+        <Link
+          to={`/home/${userID}`}
+          style={{ textDecoration: "none", color: "white" }}
+        >
           Back
         </Link>
       </div>

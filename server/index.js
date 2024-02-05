@@ -1,14 +1,18 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const User = require("./models/User");
+const User = require("./models/User.js");
 const multer = require("multer");
-const arts = require("./models/arts");
+const arts = require("./models/arts.js");
 const Counter = require("./models/Counter.js");
 const Order = require("./models/order.js");
 const Cart = require("./models/cart.js");
 const Wishlist = require("./models/wishlist.js");
 const path = require("path");
+
+const PORT = process.env.PORT || 8000;
 
 const app = express();
 app.use(express.json());
@@ -442,6 +446,8 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(8000, () => {
-  console.log("Server is running on: 8000");
+app.listen(PORT, () => {
+
+  console.log(`Server is running on: ${PORT}`);
+
 });
