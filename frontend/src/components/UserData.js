@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const UserData = () => {
   const [editingUserId, setEditingUserId] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [users, setUsers] = useState([]);
   const [editedUser, setEditedUser] = useState({
-    userID: '',
-    name: '',
-    email: '',
-    streetName: '',
-    city: '',
-    state: '',
-    pincode: '',
+    userID: "",
+    name: "",
+    email: "",
+    streetName: "",
+    city: "",
+    state: "",
+    pincode: "",
   });
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3001/users');
+        const response = await fetch("http://localhost:8000/users");
         if (response.ok) {
           const data = await response.json();
           setUsers(data);
         } else {
-          throw new Error('Failed to fetch users');
+          throw new Error("Failed to fetch users");
         }
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error("Error fetching users:", error);
       }
     };
     fetchUsers();
@@ -48,13 +48,13 @@ const UserData = () => {
 
   const handleCancel = () => {
     setEditedUser({
-      userID: '',
-      name: '',
-      email: '',
-      streetName: '',
-      city: '',
-      state: '',
-      pincode: '',
+      userID: "",
+      name: "",
+      email: "",
+      streetName: "",
+      city: "",
+      state: "",
+      pincode: "",
     });
     setEditMode(false);
     setEditingUserId(null);
@@ -62,51 +62,57 @@ const UserData = () => {
 
   const handleUpdate = async (userID) => {
     try {
-      const response = await fetch(`http://localhost:3001/updateAccount/${userID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedUser),
-      });
+      const response = await fetch(
+        `http://localhost:8000/updateAccount/${userID}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editedUser),
+        }
+      );
 
       if (response.ok) {
-        console.log('User details updated successfully!');
-        alert('Info updated');
+        console.log("User details updated successfully!");
+        alert("Info updated");
         setEditedUser({
-            // userID: response.updatedUser.userID,
-            name: response.updatedUser.name,
-            email: response.updatedUser.email,
-            streetName: response.updatedUser.streetName,
-            city: response.updatedUser.city,
-            state: response.updatedUser.state,
-            pincode: response.updatedUser.pincode,
+          // userID: response.updatedUser.userID,
+          name: response.updatedUser.name,
+          email: response.updatedUser.email,
+          streetName: response.updatedUser.streetName,
+          city: response.updatedUser.city,
+          state: response.updatedUser.state,
+          pincode: response.updatedUser.pincode,
         });
         setEditMode(false);
         setEditingUserId(null);
       } else {
-        console.error('Failed to update user details');
+        console.error("Failed to update user details");
       }
     } catch (error) {
-      console.error('Error updating user details:', error);
+      console.error("Error updating user details:", error);
     }
   };
 
   const handleDelete = async (userID) => {
     try {
-      const response = await fetch(`http://localhost:3001/deleteUser/${userID}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `http://localhost:8000/deleteUser/${userID}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
-        console.log('User deleted successfully!');
+        console.log("User deleted successfully!");
         const updatedUsers = users.filter((user) => user.userID !== userID);
         setUsers(updatedUsers);
       } else {
-        console.error('Failed to delete user');
+        console.error("Failed to delete user");
       }
     } catch (error) {
-      console.error('Error deleting user:', error);
+      console.error("Error deleting user:", error);
     }
   };
 
@@ -114,11 +120,14 @@ const UserData = () => {
     <div>
       <h2>User Data</h2>
       {users.map((user) => (
-        <div key={user.userID} className="border border-gray-300 p-4 rounded mb-4">
+        <div
+          key={user.userID}
+          className="border border-gray-300 p-4 rounded mb-4"
+        >
           {editingUserId === user.userID ? (
             <ul className="list-disc">
               <li>
-                <span className="font-bold">Name:</span>{' '}
+                <span className="font-bold">Name:</span>{" "}
                 <input
                   type="text"
                   name="name"
@@ -128,7 +137,7 @@ const UserData = () => {
                 />
               </li>
               <li>
-                <span className="font-bold">Email:</span>{' '}
+                <span className="font-bold">Email:</span>{" "}
                 <input
                   type="text"
                   name="email"
@@ -138,7 +147,7 @@ const UserData = () => {
                 />
               </li>
               <li>
-                <span className="font-bold">Street Name:</span>{' '}
+                <span className="font-bold">Street Name:</span>{" "}
                 <input
                   type="text"
                   name="streetName"
@@ -148,7 +157,7 @@ const UserData = () => {
                 />
               </li>
               <li>
-                <span className="font-bold">City:</span>{' '}
+                <span className="font-bold">City:</span>{" "}
                 <input
                   type="text"
                   name="city"
@@ -158,7 +167,7 @@ const UserData = () => {
                 />
               </li>
               <li>
-                <span className="font-bold">State:</span>{' '}
+                <span className="font-bold">State:</span>{" "}
                 <input
                   type="text"
                   name="state"
@@ -168,7 +177,7 @@ const UserData = () => {
                 />
               </li>
               <li>
-                <span className="font-bold">Pincode:</span>{' '}
+                <span className="font-bold">Pincode:</span>{" "}
                 <input
                   type="text"
                   name="pincode"
@@ -182,42 +191,60 @@ const UserData = () => {
           ) : (
             <ul className="list-disc">
               <li>
-                <span className="font-bold">Name:</span> <span>{user.name}</span>
+                <span className="font-bold">Name:</span>{" "}
+                <span>{user.name}</span>
               </li>
               <li>
-                <span className="font-bold">Email:</span> <span>{user.email}</span>
+                <span className="font-bold">Email:</span>{" "}
+                <span>{user.email}</span>
               </li>
               <li>
-                <span className="font-bold">Street Name:</span> <span>{user.streetName}</span>
+                <span className="font-bold">Street Name:</span>{" "}
+                <span>{user.streetName}</span>
               </li>
               <li>
-                <span className="font-bold">City:</span> <span>{user.city}</span>
+                <span className="font-bold">City:</span>{" "}
+                <span>{user.city}</span>
               </li>
               <li>
-                <span className="font-bold">State:</span> <span>{user.state}</span>
+                <span className="font-bold">State:</span>{" "}
+                <span>{user.state}</span>
               </li>
               <li>
-                <span className="font-bold">Pincode:</span> <span>{user.pincode}</span>
+                <span className="font-bold">Pincode:</span>{" "}
+                <span>{user.pincode}</span>
               </li>
               {/* Add other non-editable fields similarly */}
             </ul>
           )}
           {!editMode && (
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleEdit(user.userID)}>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => handleEdit(user.userID)}
+            >
               Edit
             </button>
           )}
           {editMode && (
             <>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" onClick={() => handleUpdate(user.userID)}>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                onClick={() => handleUpdate(user.userID)}
+              >
                 Update
               </button>
-              <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={handleCancel}>
+              <button
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                onClick={handleCancel}
+              >
                 Cancel
               </button>
             </>
           )}
-          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" onClick={() => handleDelete(user.userID)}>
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+            onClick={() => handleDelete(user.userID)}
+          >
             Delete
           </button>
         </div>
@@ -227,4 +254,3 @@ const UserData = () => {
 };
 
 export default UserData;
-
