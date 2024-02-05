@@ -446,6 +446,8 @@ app.get("/users", async (req, res) => {
   }
 });
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
+
   console.log(`Server is running on: ${PORT}`);
+
 });
